@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import ScrollToTop from './Scroll';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Router>
+    <ScrollToTop />
     <App />
-  </React.StrictMode>,
+  </Router>,
   document.getElementById('root')
 );
 
