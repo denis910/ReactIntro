@@ -1,22 +1,31 @@
 import React from 'react';
-import Button from '../Button/Button';
-import './Event.scss';
+import { Button } from '../../lib/style/generalStyle';
+
+import{
+    Event as EventWrapper,
+    Figure,
+    Image,
+    Title,
+    Description
+} from './EventStyle';
 
 const Event = ({
     image,
     title,
     description,
-    buttonText
+    buttonText,
+    imageAlt,
+    route
 }) => {
     return (
-        <div className="Event">
-            <figure className="Event-Figure">
-                <img src={image} alt="Design" className="Event-Image"/>
-            </figure>
-            <h3 className="Event-Title">{title}</h3>
-            <p className="Event-Description">{description}</p>
-            <Button link="/Event" text={buttonText}/>
-        </div>
+        <EventWrapper>
+            <Figure>
+                <Image src={image} alt={imageAlt}/>
+            </Figure>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
+            <Button to={route} >{buttonText}</Button>
+        </EventWrapper>
     );
 }
 export default Event;

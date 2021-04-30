@@ -1,26 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Header.scss';
-import Logo from '../../assets/images/logo.png';
+import React, { useState, useEffect } from 'react';
+import LogoImage from '../../assets/images/logo.png';
+import {
+    HeaderWrapper,
+    Inner,
+    Logo,
+    LogoContainer,
+    Nav,
+    NavItem,
+    Hamburger,
+    HamburgerLine
+} from './HeaderStyle';
 
 const Header = () => {
+    const[show, setShow] = useState(false);
+
+    const handleHamburger = () => {
+        setShow(!show);
+    }
+
+    const setShowFalse = () => {
+        setShow(false);
+    }
+
     return(
-        <header className="Header">
-            <div className="Header-Inner">
-                <Link to="/" className="Header-LogoContainer">
-                    <img alt="logo FOI-ja" src={Logo} className="Header-Logo"/>
-                </Link>
-                <div className="Header-NavHamburger">
-                    <div className="Header-NavHamburgerLine"></div>
-                    <div className="Header-NavHamburgerLine"></div>
-                    <div className="Header-NavHamburgerLine"></div>
-                </div>
-                <nav className="Header-Nav">
-                    <Link to="/Home" className="Header-NavItem">Home</Link>
-                    <Link to="/Events" className="Header-NavItem">Events</Link>
-                </nav>
-            </div>
-        </header>
+        <HeaderWrapper showHamburger={show}>
+            <Inner showHamburger={show}>
+                <LogoContainer to="/" showHamburger={show}>
+                    <Logo alt="logo FOI-ja" src={LogoImage}/>
+                </LogoContainer>
+                <Nav showHamburger={show}>
+                    <NavItem to="/Home" onClick={setShowFalse}>Home</NavItem>
+                    <NavItem to="/Events" onClick={setShowFalse}>Events</NavItem>
+                </Nav>
+                <Hamburger onClick={handleHamburger}>
+                    <HamburgerLine/>
+                    <HamburgerLine/>
+                    <HamburgerLine/>
+                </Hamburger>
+            </Inner>
+        </HeaderWrapper>
     );
 }
 

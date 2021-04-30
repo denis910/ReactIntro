@@ -1,31 +1,43 @@
 import React from 'react';
-import './EventInfo.scss';
 
 import EventCard from '../EventCard/EventCard';
-import Grid from '../Grid/Grid';
+import {
+    EventInfo as EventInfoWrapper,
+    Figure,
+    Content,
+    Image,
+    Description,
+} from './EventInfoStyle'
 
 const EventInfo = ({
     image,
-    description
+    description,
+    title,
+    location,
+    date,
+    seats,
+    firm
 }) => {
     return (
-        <div className="EventInfo">
-            <div className="EventInfo-Content">
-                <figure className="EventInfo-Figure">
-                    <img src={image} alt="UX/UI design workshop" className="EventInfo-FigureImage"/>
-                </figure>
+        <EventInfoWrapper>
+            <Content>
+                <Figure>
+                    <Image src={image} alt="UX/UI design workshop" />
+                </Figure>
                 <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
+                    title={title}
+                    location={location}
+                    date={date}
+                    seats={seats}
+                    firm={firm}
+                    radius="false"
+                    buttonText="Prijavi se"
                 />
-            </div>
-            <p className="EventInfo-Description">
-            {description}
-            </p>
-        </div>
+            </Content>
+            <Description>
+                {description}
+            </Description>
+        </EventInfoWrapper>
     );
 }
 export default EventInfo;

@@ -1,6 +1,15 @@
 import React from 'react';
-import Button from '../Button/Button';
-import './EventCard.scss';
+//import './EventCard.scss';
+import { Button } from '../../lib/style/generalStyle';
+import {
+    EventCard as EventCardWrapper,
+    Title,
+    Content,
+    ContentRow,
+    Item,
+    ItemTitle,
+    ItemValue
+} from './EventCardStyle'
 
 const EventCard = ({
     title,
@@ -8,36 +17,37 @@ const EventCard = ({
     date,
     seats,
     firm,
-    withRadius
+    radius,
+    link,
+    buttonText
 }) => {
-    const EventCardClassName = withRadius ? 'EventCard EventCard_Radius' : 'EventCard EventCard_Radius_None';
     return (
-        <div className={EventCardClassName}>
-            <h2 className={EventCardClassName + "-Title"}>{title}</h2>
-            <div className={EventCardClassName + "-Content"}>
-                <div className="EventCard-ContentRow">
-                    <div className="EventCard-Item">
-                        <h3 className="EventCard-ItemTitle">Lokacija</h3>
-                        <p className="EventCard-ItemValue">{location}</p>
-                    </div>
-                    <div className="EventCard-Item">
-                        <h3 className="EventCard-ItemTitle">Datum i vrijeme</h3>
-                        <p className="EventCard-ItemValue">{date}</p>
-                    </div>
-                </div>
-                <div className="EventCard-ContentRow">
-                    <div className="EventCard-Item">
-                        <h3 className="EventCard-ItemTitle">Slobodna mjesta</h3>
-                        <p className="EventCard-ItemValue">{seats}</p>
-                    </div>
-                    <div className="EventCard-Item">
-                        <h3 className="EventCard-ItemTitle">Firma</h3>
-                        <p className="EventCard-ItemValue">{firm}</p>
-                    </div>
-                </div>
-            </div>
-            <Button link="/Event" text="Find Out More"/>
-        </div>
+        <EventCardWrapper radius={radius}>
+            <Title radius={radius}>{title}</Title>
+            <Content radius={radius}>
+                <ContentRow>
+                    <Item>
+                        <ItemTitle>Lokacija</ItemTitle>
+                        <ItemValue>{location}</ItemValue>
+                    </Item>
+                    <Item>
+                        <ItemTitle>Datum i vrijeme</ItemTitle>
+                        <ItemValue>{date}</ItemValue>
+                    </Item>
+                </ContentRow>
+                <ContentRow>
+                    <Item>
+                        <ItemTitle>Slobodna mjesta</ItemTitle>
+                        <ItemValue>{seats}</ItemValue>
+                    </Item>
+                    <Item>
+                        <ItemTitle>Firma</ItemTitle>
+                        <ItemValue>{firm}</ItemValue>
+                    </Item>
+                </ContentRow>
+            </Content>
+            <Button to={link}>{buttonText}</Button>
+        </EventCardWrapper>
     );
 }
 export default EventCard;

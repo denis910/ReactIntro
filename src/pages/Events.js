@@ -1,82 +1,57 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import eventsMock from '../lib/mock/events';
 
 //Components
 import EventCard from '../components/EventCard/EventCard';
-import Grid from '../components/Grid/Grid';
+import { Grid, LoaderWrapper, SearchBar } from '../lib/style/generalStyle';
 import Section from '../components/Section/Section';
-import Event from '../components/Event/Event';
-import Hero from '../components/Hero/Hero';
+import { colors } from '../lib/style/theme';
 
 function Events() {
+  const [events, setEvents] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      search === '' && setEvents(eventsMock);
+    }, 1000);
+  }, [events]);
+
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (changedEvent) => {
+    setSearch(changedEvent.target.value.toString().toLowerCase());
+    events && setEvents(eventsMock.filter(event => event.title.toString().toLowerCase().includes(changedEvent.target.value.toString().toLowerCase())));
+  }
+
   return (
     <>
         <Section title="Events" withoutTopPadding={true}>
-            <Grid columns="4">
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
+          <SearchBar type="search" placeholder="Search event by title" disabled={!events} onChange={handleSearch}/>
+          {!events &&
+            <LoaderWrapper
+              type="TailSpin"
+              color={colors.yellow}
+              height={100}
+              width={100}
+            />
+          }
+          {events &&
+            <Grid columns={4}>
+              {events.map(event => event &&
+                <EventCard
+                  key={event.id} 
+                  title={event.title}
+                  location={event.location}
+                  date={event.dateTime}
+                  seats={event.availability}
+                  firm={event.company}
+                  radius="true"
+                  link={`/Event/${event.id}`}
+                  buttonText="Find out more"
                 />
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
-                />
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
-                />
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
-                />
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
-                />
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
-                />
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
-                />
-                <EventCard 
-                title="UX/UI design workshop"
-                location="Hodnik FOI-ja"
-                date="14.10.(9:00-16:00h)"
-                seats="15/60"
-                firm="Speck"
-                withRadius={true}
-                />
+              )}
             </Grid>
+          }
         </Section>
     </>
   );
