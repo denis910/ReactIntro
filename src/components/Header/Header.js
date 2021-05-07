@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import LogoImage from '../../assets/images/logo.png';
 import {
     HeaderWrapper,
@@ -30,6 +30,9 @@ const Header = () => {
                 </LogoContainer>
                 <Nav showHamburger={show}>
                     <NavItem to="/Home" onClick={setShowFalse}>Home</NavItem>
+                    <NavItem to="/Login" onClick={setShowFalse}>Login</NavItem>
+                    <NavItem to="/Register" onClick={setShowFalse}>Register</NavItem>
+                    <NavItem to="/admin" onClick={setShowFalse}>Admin</NavItem>
                     <NavItem to="/Events" onClick={setShowFalse}>Events</NavItem>
                 </Nav>
                 <Hamburger onClick={handleHamburger}>

@@ -7,10 +7,13 @@ export const breakpoints = {
 export const colors = {
     red: '#d33e3e',
     yellow: '#e4b43c',
+    green:'#16c79a',
     white: '#ffffff',
     black: '#000000',
     darkGrey: '#333333',
     lightGrey: '#d0d0d0',
+    tableHoverGray: '#dddddd',
+    tableEvenGray: '#f2f2f2',
     blackOverlay: 'rgba(0, 0, 0, 0.7)'
 };
 export const boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';

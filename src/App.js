@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 import './App.scss';
 
@@ -11,6 +11,9 @@ import Footer from './components/Footer/Footer';
 import Home from './pages/Home';
 import Events from './pages/Events';
 import Event from './pages/Event';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
         <Route path="/Home" component={Home}/>
         <Route path="/Events" component={Events}/>
         <Route path="/Event/:id" component={Event}/>
+        <Route path="/Login" component={Login}/>
+        <Route path="/Register" component={Register}/>
+        <Route path="/admin" component={Admin}/>
       </Main>
       <Footer/>
     </>

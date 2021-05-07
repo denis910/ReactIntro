@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import {
-    colors, 
-    breakpoints, 
+    breakpoints
 } from '../../lib/style/theme';
 
 export const Section= styled.section`

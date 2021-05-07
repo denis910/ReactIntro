@@ -3,7 +3,6 @@ import {
     colors, 
     breakpoints, 
 } from '../../lib/style/theme';
-import { Link } from 'react-router-dom';
 import HeroImage from '../../assets/images/hero.jpeg';
 
 export const SectionHero= styled.section`
