@@ -9,14 +9,13 @@ import { colors } from '../lib/style/theme';
 
 function Events() {
   const [events, setEvents] = useState(null);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
       search === '' && setEvents(eventsMock);
     }, 1000);
   }, [events]);
-
-  const [search, setSearch] = useState('');
 
   const handleSearch = (changedEvent) => {
     setSearch(changedEvent.target.value.toString().toLowerCase());
