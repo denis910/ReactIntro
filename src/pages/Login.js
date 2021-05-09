@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { loginUser } from '../api/login';
+import { getAllUsers } from '../api/user';
 
 //Components
 import Section from '../components/Section/Section';
@@ -12,13 +14,18 @@ import{
     InputText,
     InputError,
     ButtonSubmit,
-    LoaderWrapper
+    LoaderWrapper,
+    SuccessMessage
 } from '../lib/style/generalStyle'
 
 import { colors } from '../lib/style/theme';
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [succesMessage, setSuccessMessage] = useState('');
+    const [isRequestFinished, setIsRequestFinished] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -32,12 +39,32 @@ const Login = () => {
                 .min(8,'Password must be at least 8 characters long')
                 .required('Password is required'),
         }),
-        onSubmit: values => {
+        onSubmit: async (values, { resetForm }) => {
             setIsLoading(true);
-            setTimeout(() => {
+            setIsRequestFinished(false);
+            setIsError(false);
+
+            try{
+                const response = await loginUser(values);
+                const users = await getAllUsers(response.token);
+                const isAdmin = users.find(user => user.email === values.email).isAdmin;
+
+                localStorage.setItem('authToken',response.token);
+                localStorage.setItem('isAdmin',isAdmin);
+
+
+                setTimeout (() => {
+                    setIsRequestFinished(true);
+                }, 4000);
+                setSuccessMessage('');
+                resetForm({});
+            } catch (err){
+                setIsError(true);
+                setSuccessMessage('');
+            } finally {
+                setIsRequestFinished(true);
                 setIsLoading(false);
-                alert(JSON.stringify(values));
-            }, 1000);
+            }
         }
     });
 
@@ -45,6 +72,9 @@ const Login = () => {
         <>
             <Title>Login</Title>
             <Section withoutTopPadding={true}>
+                {isRequestFinished &&
+                    <SuccessMessage isError={isError}>{succesMessage}</SuccessMessage>
+                }
                 {!isLoading
                     ? <Form onSubmit={formik.handleSubmit}>
                         <FormRow>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import './App.scss';
 
@@ -16,6 +16,12 @@ import Register from './pages/Register';
 import Admin from './pages/Admin';
 
 function App() {
+
+  useEffect(() => {
+    localStorage.getItem('isAdmin');
+    localStorage.getItem('authToken');
+  }, []);
+
   return (
     <>
       <Header/>

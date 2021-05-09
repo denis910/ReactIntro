@@ -14,13 +14,19 @@ import{
     InputCheckbox,
     InputError,
     ButtonSubmit,
-    LoaderWrapper
+    LoaderWrapper,
+    SuccessMessage
 } from '../lib/style/generalStyle'
 
 import { colors } from '../lib/style/theme';
 
 const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
+
+    const isError = false;
+    const succesMessage = '';
+    const [isRequestFinished, setIsRequestFinished] = useState(false);
+ 
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -50,19 +56,49 @@ const Register = () => {
                     }
                 )
         }),
-        onSubmit: values => {
+        onSubmit: (values, { resetForm }) => {
             setIsLoading(true);
-            setTimeout(() => {
+            setIsRequestFinished(false);
+            console.log("err");
+
+            /*
+            const user = {
+                email: values.email,
+                password: values.password,
+                firstname: values.firstName,
+                lastname: values.lastName,
+                isAdmin: values.isAdmin
+            }
+            registerUser(user)
+                .then(res =>  {
+                    setIsError(false);
+                    resetForm({});
+                    console.log("err");
+                    setSuccessMessage('');
+                    setTimeout (() => {
+                        setIsRequestFinished(true);
+                    }, 4000);
+                })
+                .catch(err => {
+                    setIsError(true);
+                    console.log("err");
+                    setSuccessMessage('');
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                    setIsRequestFinished(true);
+                });*/
                 setIsLoading(false);
-                alert(JSON.stringify(values));
-            }, 1000);
         }
-    });
+    });    
 
     return(
         <>
             <Title>Register</Title>
             <Section withoutTopPadding={true}>
+            {isRequestFinished &&
+                <SuccessMessage isError={isError}>{succesMessage}</SuccessMessage>
+            }
                 {!isLoading
                     ? <Form onSubmit={formik.handleSubmit}>
                         <FormRow>

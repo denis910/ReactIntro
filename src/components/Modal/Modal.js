@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -20,7 +20,6 @@ import{
     Grid,
     ButtonExit
 } from '../../lib/style/generalStyle';
-import { date } from 'yup/lib/locale';
 
 const categoryOptions = [
     { value: 'null', label: 'Select...' },
@@ -41,7 +40,6 @@ const firmOptions = [
 
 const Modal = (props) => {
 
-    const [isLoading, setIsLoading] = useState(null);
     const formik = useFormik({
         initialValues: {
             title: '',

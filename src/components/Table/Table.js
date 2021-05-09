@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 
 //Components
-import { Button, ButtonEvent, InputText, ButtonExit } from '../../lib/style/generalStyle';
-import { Grid } from '../../lib/style/generalStyle';
+import { ButtonEvent, ButtonExit } from '../../lib/style/generalStyle';
 import Modal from '../../components/Modal/Modal';
 import { FaTrash } from 'react-icons/fa'
 
