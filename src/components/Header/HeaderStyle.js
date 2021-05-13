@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {
     colors, 
     breakpoints,
@@ -78,7 +78,7 @@ export const Nav = styled.nav`
     }
 `;
 
-export const NavItem = styled(Link)`
+export const NavigationItem = css`
     display: inline-block;
     text-decoration: none;
     color: ${colors.black};
@@ -96,6 +96,21 @@ export const NavItem = styled(Link)`
 
     &:last-child {
         margin-right: 0;
+    }
+`;
+
+export const NavItem = styled(Link)`
+    ${NavigationItem}
+`;
+
+export const ButtonLogout = styled.button`
+    ${NavigationItem};
+    border: none;
+    background-color: inherit;
+    font-family: 'Montserrat', sans-serif;
+
+    &:hover {
+        cursor: pointer;
     }
 `;
 

@@ -8,10 +8,11 @@ import {
     Nav,
     NavItem,
     Hamburger,
-    HamburgerLine
+    HamburgerLine,
+    ButtonLogout
 } from './HeaderStyle';
 
-const Header = () => {
+const Header = (props) => {
     const[show, setShow] = useState(false);
 
     const handleHamburger = () => {
@@ -22,6 +23,13 @@ const Header = () => {
         setShow(false);
     }
 
+    const setLoggedOut = () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('isAdmin');
+        props.setIsAdmin(false);
+        props.setIsLoggedIn(false);
+    }
+
     return(
         <HeaderWrapper showHamburger={show}>
             <Inner showHamburger={show}>
@@ -30,10 +38,23 @@ const Header = () => {
                 </LogoContainer>
                 <Nav showHamburger={show}>
                     <NavItem to="/Home" onClick={setShowFalse}>Home</NavItem>
-                    <NavItem to="/Login" onClick={setShowFalse}>Login</NavItem>
-                    <NavItem to="/Register" onClick={setShowFalse}>Register</NavItem>
-                    <NavItem to="/admin" onClick={setShowFalse}>Admin</NavItem>
                     <NavItem to="/Events" onClick={setShowFalse}>Events</NavItem>
+                    {props.isAdmin &&
+                        <>
+                            <NavItem to="/admin" onClick={setShowFalse}>Admin</NavItem>
+                            <ButtonLogout onClick={setLoggedOut}>Logout</ButtonLogout>
+                        </>
+                    }
+                    {!props.isAdmin && props.isLoggedIn &&
+                        <ButtonLogout onClick={setLoggedOut}>Logout</ButtonLogout>
+                    }
+                    {!props.isLoggedIn &&
+                        <>
+                            <NavItem to="/Login" onClick={setShowFalse}>Login</NavItem>
+                            <NavItem to="/Register" onClick={setShowFalse}>Register</NavItem>
+                            {console.log(props.isLoggedIn)}
+                        </>
+                    }
                 </Nav>
                 <Hamburger onClick={handleHamburger}>
                     <HamburgerLine/>

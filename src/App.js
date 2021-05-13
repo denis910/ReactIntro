@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import './App.scss';
 
@@ -6,6 +6,7 @@ import './App.scss';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
 import Footer from './components/Footer/Footer';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 //Pages
 import Home from './pages/Home';
@@ -15,26 +16,30 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Admin from './pages/Admin';
 
+
 function App() {
 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
-    localStorage.getItem('isAdmin');
-    localStorage.getItem('authToken');
+    localStorage.getItem('isAdmin') === 'true' ? setIsAdmin(true) : setIsAdmin(false)
+    localStorage.getItem('authToken') === null ? setIsLoggedIn(false) : setIsLoggedIn(true);
   }, []);
 
   return (
     <>
-      <Header/>
+      <Header isLoggedIn={isLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} setIsLoggedIn={setIsLoggedIn} />
       <Main>
-        <Route exact path="/" component={Home}/>
-        <Route path="/Home" component={Home}/>
-        <Route path="/Events" component={Events}/>
-        <Route path="/Event/:id" component={Event}/>
-        <Route path="/Login" component={Login}/>
-        <Route path="/Register" component={Register}/>
-        <Route path="/admin" component={Admin}/>
+        <Route exact path="/" component={Home} />
+        <Route path="/Home" component={Home} />
+        <Route path="/Events" component={Events} />
+        <Route path="/Event/:id" component={Event} />
+        <Route path="/Login" render={() => <Login setIsAdmin={setIsAdmin} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/Register" component={Register} />
+        <ProtectedRoute path="/admin" component={Admin} />
       </Main>
-      <Footer/>
+      <Footer />
     </>
   );
 }

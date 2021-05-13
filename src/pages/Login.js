@@ -20,7 +20,7 @@ import{
 
 import { colors } from '../lib/style/theme';
 
-const Login = () => {
+const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [succesMessage, setSuccessMessage] = useState('');
@@ -48,6 +48,8 @@ const Login = () => {
                 const response = await loginUser(values);
                 const users = await getAllUsers(response.token);
                 const isAdmin = users.find(user => user.email === values.email).isAdmin;
+                props.setIsAdmin(isAdmin);
+                props.setIsLoggedIn(true);
 
                 localStorage.setItem('authToken',response.token);
                 localStorage.setItem('isAdmin',isAdmin);
@@ -56,11 +58,11 @@ const Login = () => {
                 setTimeout (() => {
                     setIsRequestFinished(true);
                 }, 4000);
-                setSuccessMessage('');
+                setSuccessMessage('Success');
                 resetForm({});
             } catch (err){
                 setIsError(true);
-                setSuccessMessage('');
+                setSuccessMessage('Failure');
             } finally {
                 setIsRequestFinished(true);
                 setIsLoading(false);

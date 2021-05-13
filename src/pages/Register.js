@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 
 //Components
 import Section from '../components/Section/Section';
+import { registerUser } from '../api/register';
 import{
     Title,
     Form,
@@ -23,8 +24,8 @@ import { colors } from '../lib/style/theme';
 const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
 
-    const isError = false;
-    const succesMessage = '';
+    const [isError, setIsError] = useState(false);
+    const [succesMessage, setSuccessMessage] = useState('');
     const [isRequestFinished, setIsRequestFinished] = useState(false);
  
     const formik = useFormik({
@@ -47,7 +48,7 @@ const Register = () => {
             password: Yup.string()
                 .min(8,'Password must be at least 8 characters long')
                 .required('Password is required'),
-            passwordConfirmation: Yup.string()
+            passwordConformation: Yup.string()
                 .test(
                     'passwords-match',
                     'Passwords must match',
@@ -59,14 +60,12 @@ const Register = () => {
         onSubmit: (values, { resetForm }) => {
             setIsLoading(true);
             setIsRequestFinished(false);
-            console.log("err");
 
-            /*
             const user = {
                 email: values.email,
                 password: values.password,
-                firstname: values.firstName,
-                lastname: values.lastName,
+                firstName: values.firstName,
+                lastName: values.lastName,
                 isAdmin: values.isAdmin
             }
             registerUser(user)
@@ -74,7 +73,7 @@ const Register = () => {
                     setIsError(false);
                     resetForm({});
                     console.log("err");
-                    setSuccessMessage('');
+                    setSuccessMessage('Success');
                     setTimeout (() => {
                         setIsRequestFinished(true);
                     }, 4000);
@@ -82,12 +81,12 @@ const Register = () => {
                 .catch(err => {
                     setIsError(true);
                     console.log("err");
-                    setSuccessMessage('');
+                    setSuccessMessage('Failure');
                 })
                 .finally(() => {
                     setIsLoading(false);
                     setIsRequestFinished(true);
-                });*/
+                });
                 setIsLoading(false);
         }
     });    
