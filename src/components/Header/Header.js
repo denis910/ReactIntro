@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import LogoImage from '../../assets/images/logo.png';
 import {
     HeaderWrapper,
@@ -12,8 +12,12 @@ import {
     ButtonLogout
 } from './HeaderStyle';
 
-const Header = (props) => {
+//Context
+import { AuthContext } from '../../context/AuthContext';
+
+const Header = () => {
     const[show, setShow] = useState(false);
+    const {isLoggedIn, isAdmin, setIsAdmin, setIsLoggedIn} = useContext(AuthContext);
 
     const handleHamburger = () => {
         setShow(!show);
@@ -26,8 +30,8 @@ const Header = (props) => {
     const setLoggedOut = () => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('isAdmin');
-        props.setIsAdmin(false);
-        props.setIsLoggedIn(false);
+        setIsAdmin(false);
+        setIsLoggedIn(false);
     }
 
     return(
@@ -39,20 +43,19 @@ const Header = (props) => {
                 <Nav showHamburger={show}>
                     <NavItem to="/Home" onClick={setShowFalse}>Home</NavItem>
                     <NavItem to="/Events" onClick={setShowFalse}>Events</NavItem>
-                    {props.isAdmin &&
+                    {isAdmin &&
                         <>
                             <NavItem to="/admin" onClick={setShowFalse}>Admin</NavItem>
                             <ButtonLogout onClick={setLoggedOut}>Logout</ButtonLogout>
                         </>
                     }
-                    {!props.isAdmin && props.isLoggedIn &&
+                    {!isAdmin && isLoggedIn &&
                         <ButtonLogout onClick={setLoggedOut}>Logout</ButtonLogout>
                     }
-                    {!props.isLoggedIn &&
+                    {!isLoggedIn &&
                         <>
                             <NavItem to="/Login" onClick={setShowFalse}>Login</NavItem>
                             <NavItem to="/Register" onClick={setShowFalse}>Register</NavItem>
-                            {console.log(props.isLoggedIn)}
                         </>
                     }
                 </Nav>

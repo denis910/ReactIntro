@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Route } from 'react-router-dom';
 import './App.scss';
 
@@ -16,11 +16,17 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Admin from './pages/Admin';
 
+//Context
+import { AuthContext } from './context/AuthContext';
+
 
 function App() {
 
+  /*
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  */
+  const {isLoggedIn, isAdmin, setIsAdmin, setIsLoggedIn} = useContext(AuthContext);
 
   useEffect(() => {
     localStorage.getItem('isAdmin') === 'true' ? setIsAdmin(true) : setIsAdmin(false)

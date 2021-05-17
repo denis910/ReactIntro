@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { loginUser } from '../api/login';
@@ -18,13 +18,17 @@ import{
     SuccessMessage
 } from '../lib/style/generalStyle'
 
+//Context
+import { AuthContext } from '../context/AuthContext';
+
 import { colors } from '../lib/style/theme';
 
-const Login = (props) => {
+const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [succesMessage, setSuccessMessage] = useState('');
     const [isRequestFinished, setIsRequestFinished] = useState(false);
+    const {setIsLoggedIn, setIsAdmin} = useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: {
@@ -48,8 +52,8 @@ const Login = (props) => {
                 const response = await loginUser(values);
                 const users = await getAllUsers(response.token);
                 const isAdmin = users.find(user => user.email === values.email).isAdmin;
-                props.setIsAdmin(isAdmin);
-                props.setIsLoggedIn(true);
+                setIsAdmin(isAdmin);
+                setIsLoggedIn(true);
 
                 localStorage.setItem('authToken',response.token);
                 localStorage.setItem('isAdmin',isAdmin);
